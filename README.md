@@ -44,7 +44,7 @@ const client = initialize({
 
 👤 **Ben Force**
 
-* Website: https://www.thebenforce.com/
+* Website: https://thebenforce.com/
 * Twitter: [@theBenForce](https://twitter.com/theBenForce)
 * Github: [@theBenForce](https://github.com/theBenForce)
 * LinkedIn: [@theBenForce](https://linkedin.com/in/theBenForce)
