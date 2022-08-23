@@ -3,6 +3,7 @@ import { EventEmitter } from 'events';
 import { FeatureInterface } from 'unleash-client/lib/feature';
 import { Segment } from 'unleash-client/lib/strategy/strategy';
 import { AppConfig } from 'aws-sdk';
+import { UnleashEvents } from 'unleash-client';
 
 export interface AppConfigRepositoryConfig {
   applicaion: string;
@@ -10,17 +11,18 @@ export interface AppConfigRepositoryConfig {
   configuration: string;
   clientId: string;
   clientConfiguration?: AppConfig.Types.ClientConfiguration;
+  appConfig?: AppConfig;
 }
 
 export class AppConfigRepository extends EventEmitter implements RepositoryInterface {
   private appConfig: AppConfig;
-  private data: Array<FeatureInterface>;
+  private data: Array<FeatureInterface> = [];
   private segments = new Map<number, Segment>();
 
   constructor(private config: AppConfigRepositoryConfig) {
     super();
 
-    this.appConfig = new AppConfig(config.clientConfiguration);
+    this.appConfig = config.appConfig ?? new AppConfig(config.clientConfiguration);
   }
 
   getToggle(name: string): FeatureInterface {
@@ -29,6 +31,8 @@ export class AppConfigRepository extends EventEmitter implements RepositoryInter
     if (!result) {
       throw new Error(`Toggle ${name} not found`)
     }
+
+    return result;
   }
   getToggles(): FeatureInterface[] {
     throw new Error('Method not implemented.');
@@ -52,6 +56,8 @@ export class AppConfigRepository extends EventEmitter implements RepositoryInter
     if (rawData) {
       this.data = JSON.parse(rawData);
     }
+
+    this.emit(UnleashEvents.Ready);
   }
 
 }
