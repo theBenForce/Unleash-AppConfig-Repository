@@ -4,6 +4,9 @@
   <a href="#" target="_blank">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
   </a>
+  <a href="https://github.com/theBenForce/Unleash-AppConfig-Repository/actions/workflows/release.yml" target="_blank">
+    <img alt="Release Status" src="https://github.com/theBenForce/Unleash-AppConfig-Repository/actions/workflows/release.yml/badge.svg" />
+  </a>
   <a href="https://twitter.com/theBenForce" target="_blank">
     <img alt="Twitter: theBenForce" src="https://img.shields.io/twitter/follow/theBenForce.svg?style=social" />
   </a>
