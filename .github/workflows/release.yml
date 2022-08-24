@@ -52,12 +52,15 @@ jobs:
       - name: Install Node.js dependencies
         run: yarn install
 
-      - uses: mattallty/jest-github-action@v1
-        name: Run Tests
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run Tests
+        run: yarn test --ci --reporters=default --reporters=jest-junit
+
+      - uses: actions/upload-artifact@v2 # upload test results
+        if: success() || failure() # run this step even if previous step failed
         with:
-          test-command: "yarn test"
+          name: JEST Results
+          path: junit.xml
+          reporter: jest-junit
 
   release:
     name: Release NPM
