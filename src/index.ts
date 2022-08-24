@@ -46,7 +46,7 @@ export class AppConfigRepository extends EventEmitter implements RepositoryInter
   }
 
   stop(): void {
-    throw new Error('Method not implemented.');
+    // TODO: Stop fetching updates
   }
 
   async start(): Promise<void> {

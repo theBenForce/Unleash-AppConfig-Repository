@@ -1,7 +1,7 @@
 import * as AWSMock from 'aws-sdk-mock';
 import AWS from 'aws-sdk';
 import { AppConfigRepository } from '../src/index';
-import { initialize } from 'unleash-client';
+import { initialize, destroy } from 'unleash-client';
 import { FeatureInterface } from 'unleash-client/lib/feature';
 
 describe('Integration', () => {
@@ -43,8 +43,10 @@ describe('Integration', () => {
     await unleash.start();
     const fallback = jest.fn().mockReturnValue(false);
     const result = unleash.isEnabled('Test', undefined, fallback);
+    destroy();
 
     expect(fallback).not.toBeCalled();
     expect(result).toBe(true);
+
   });
 });
