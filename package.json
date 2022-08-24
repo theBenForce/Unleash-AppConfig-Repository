@@ -4,6 +4,9 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": "git@github.com:theBenForce/Unleash-AppConfig-Repository.git",
+  "bugs": {
+    "url": "https://github.com/theBenForce/Unleash-AppConfig-Repository/issues"
+  },
   "author": "Ben Force <benforce@gmail.com>",
   "description": "Use AWS AppConfig as a backend for Unleash feature flags",
   "license": "MIT",
