@@ -55,8 +55,7 @@ jobs:
       - name: Run Tests
         run: yarn test --ci --reporters=default --reporters=jest-junit
 
-      - uses: actions/upload-artifact@v2 # upload test results
-        if: success() || failure() # run this step even if previous step failed
+      - uses: mikepenz/action-junit-report@v3
+        if: always() # run this step even if previous step failed
         with:
-          name: JEST Results
-          path: reports/jest-junit.xml
+          report_paths: reports/jest-junit.xml
