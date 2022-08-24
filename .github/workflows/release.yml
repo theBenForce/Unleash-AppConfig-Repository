@@ -1,8 +1,11 @@
 name: Release
 
 on:
-  # Trigger the workflow on push or pull request,
-  # but only for the main branch
+  workflow_run:
+    workflows:
+      - Testing
+    types:
+      - completed
   push:
     branches:
       - main
@@ -13,62 +16,11 @@ permissions:
   contents: write
 
 jobs:
-  lint:
-    name: Run linters
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v3
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          cache: "yarn"
-
-      - name: Install Node.js dependencies
-        run: yarn install
-
-      - name: Run linters
-        uses: wearerequired/lint-action@v2
-        with:
-          eslint: true
-
-  test:
-    name: Run Tests
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v3
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          cache: "yarn"
-
-      - name: Install Node.js dependencies
-        run: yarn install
-
-      - name: Run Tests
-        run: yarn test --ci --reporters=default --reporters=jest-junit
-
-      - uses: actions/upload-artifact@v2 # upload test results
-        if: success() || failure() # run this step even if previous step failed
-        with:
-          name: JEST Results
-          path: junit.xml
-          reporter: jest-junit
-
   release:
     name: Release NPM
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     environment: Release
-    needs:
-      - lint
-      - test
 
     steps:
       - name: Check out Git repository
