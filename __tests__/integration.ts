@@ -1,9 +1,10 @@
 import * as AWSMock from 'aws-sdk-mock';
 import AWS from 'aws-sdk';
+import { AppConfigRepository } from '../src/index';
+import { initialize } from 'unleash-client';
 import { FeatureInterface } from 'unleash-client/lib/feature';
-import { AppConfigRepository } from './';
 
-describe('AppConfigRepository', () => {
+describe('Integration', () => {
   beforeAll(() => {
     AWSMock.setSDKInstance(AWS);
     AWSMock.mock('AppConfig', 'getConfiguration', (params, callback) => {
@@ -24,21 +25,26 @@ describe('AppConfigRepository', () => {
     });
   });
 
-  it('should load data from appconfig', async () => {
+  it('should work from unleash', async () => {
     const appConfig = new AWS.AppConfig();
 
-    const repo = new AppConfigRepository({
-      applicaion: 'abc',
-      environment: 'production',
-      configuration: 'featureFlags',
-      clientId: '123',
-      appConfig,
+    const unleash = initialize({
+      appName: 'abc',
+      url: 'not-required',
+      repository: new AppConfigRepository({
+        applicaion: 'abc',
+        environment: 'production',
+        configuration: 'featureFlags',
+        clientId: '123',
+        appConfig,
+      }),
     });
 
-    await repo.start();
+    await unleash.start();
+    const fallback = jest.fn().mockReturnValue(false);
+    const result = unleash.isEnabled('Test', undefined, fallback);
 
-    const toggle = repo.getToggle('Test');
-
-    expect(toggle).toHaveProperty('type', 'release');
+    expect(fallback).not.toBeCalled();
+    expect(result).toBe(true);
   });
 });
