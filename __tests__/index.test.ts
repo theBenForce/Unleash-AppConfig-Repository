@@ -1,7 +1,7 @@
 import * as AWSMock from 'aws-sdk-mock';
 import AWS from 'aws-sdk';
 import { FeatureInterface } from 'unleash-client/lib/feature';
-import { AppConfigRepository } from './';
+import { AppConfigRepository } from '../src';
 
 describe('AppConfigRepository', () => {
   beforeAll(() => {

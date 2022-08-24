@@ -3,6 +3,15 @@
   "compilerOptions": {
     "esModuleInterop": true,
     "rootDir": "src",
-    "outDir": "dist"
-  }
+    "outDir": "dist",
+    "declaration": true
+  },
+  "include": [
+    "src/**/*.ts",
+    "__tests__/index.test.ts"
+  ],
+  "exclude": [
+    "*.test.ts",
+    "*.spec.ts"
+  ]
 }
