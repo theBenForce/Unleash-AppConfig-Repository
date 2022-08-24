@@ -1,0 +1,6 @@
+src/
+__tests__/
+coverage/
+.eslint*
+*.config.js
+tsconfig.json
