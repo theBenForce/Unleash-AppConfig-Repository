@@ -35,7 +35,8 @@ const repo = new AppConfigRepository({
 });
 
 const client = initialize({
-  ...
+  appName: 'abc',
+  url: 'not-required',
   repository: repo,
 });
 ```

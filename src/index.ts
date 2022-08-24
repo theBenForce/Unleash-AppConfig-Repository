@@ -16,7 +16,9 @@ export interface AppConfigRepositoryConfig {
 
 export class AppConfigRepository extends EventEmitter implements RepositoryInterface {
   private appConfig: AppConfig;
+
   private data: Array<FeatureInterface> = [];
+
   private segments = new Map<number, Segment>();
 
   constructor(private config: AppConfigRepositoryConfig) {
@@ -29,20 +31,24 @@ export class AppConfigRepository extends EventEmitter implements RepositoryInter
     const result = this.data.find(toggle => toggle.name === name);
     
     if (!result) {
-      throw new Error(`Toggle ${name} not found`)
+      throw new Error(`Toggle ${name} not found`);
     }
 
     return result;
   }
+
   getToggles(): FeatureInterface[] {
-    throw new Error('Method not implemented.');
+    return this.data;
   }
+
   getSegment(id: number): Segment | undefined {
     return this.segments.get(id);
   }
+
   stop(): void {
-    throw new Error('Method not implemented.');
+    // TODO: Stop fetching updates
   }
+
   async start(): Promise<void> {
     const response = await this.appConfig.getConfiguration({
       Application: this.config.applicaion,
