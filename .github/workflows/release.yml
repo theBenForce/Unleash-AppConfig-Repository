@@ -6,9 +6,6 @@ on:
       - Testing
     types:
       - completed
-  push:
-    branches:
-      - main
 
 # Down scope as necessary via https://docs.github.com/en/actions/security-guides/automatic-token-authentication#modifying-the-permissions-for-the-github_token
 permissions:
@@ -19,6 +16,7 @@ jobs:
   release:
     name: Release NPM
     runs-on: ubuntu-latest
+    if: github.event.workflow_run.conclusion == 'success' && github.ref_name == 'main'
     environment: Release
 
     steps:
@@ -39,7 +37,6 @@ jobs:
 
       - name: Semantic Release
         run: yarn release
-        if: ${{ github.event.workflow_run.conclusion == 'success' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
