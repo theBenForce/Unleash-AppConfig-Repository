@@ -9,7 +9,7 @@
   "license": "MIT",
   "scripts": {
     "test": "jest",
-    "semantic-release": "semantic-release",
+    "release": "semantic-release",
     "build": "tsc"
   },
   "devDependencies": {
